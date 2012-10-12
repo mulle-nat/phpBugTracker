@@ -56,6 +56,11 @@ include ('inc/functions.php');
 // PEAR::DB
 //@ini_set("display_errors", true);
 require_once(PEAR_PATH . 'DB.php');
+//require_once(PEAR_PATH . 'MDB2.php');
+//define ('DB_FETCHMODE_ORDERED', MDB2_FETCHMODE_ORDERED); //(default)
+//define ('DB_FETCHMODE_ASSOC', MDB2_FETCHMODE_ASSOC);
+//define ('DB_FETCHMODE_OBJECT', MDB2_FETCHMODE_OBJECT);
+
 //@ini_restore("display_errors");
 
 if (version_compare(PHP_VERSION, '5.2.0') < 0) {
@@ -84,7 +89,9 @@ if (defined('DB_PORT') && (DB_PORT != '')) {
  * * It's unclear what solution works for both php4 and php5.
  * * the documentation recommends PEAR::isError($db) which is also non-static
  */
+//$db = MDB2::Connect($dsn);
 $db = DB::Connect($dsn);
+//if (MDB2::isError($db)) {
 if (DB::isError($db)) {
     die($db->message . '<br>' . $db->userinfo);
 }
@@ -95,8 +102,8 @@ $db->query("set names utf8");
   if ($db->isError($db)) {
   die($db->message.'<br>'.$db->userinfo);
   }
- */
-/*
+ */ 
+ /*
   $db = &DB::connect($dsn);
   if (PEAR::isError($db)) {
   die($db->message.'<br>'.$db->userinfo);
